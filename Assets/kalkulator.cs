@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class Calculator : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Calculator : MonoBehaviour
     private float firstNumber;
     private string operation;
     private bool isSecondNumber = false;
+
+   
+    private List<float> results = new List<float>();
 
     public void OnNumberClick(string number)
     {
@@ -42,7 +46,13 @@ public class Calculator : MonoBehaviour
                     break;
             }
 
+            
             display.text = result.ToString();
+
+            
+            results.Add(result);
+
+            
             currentInput = result.ToString();
             isSecondNumber = false;
         }
@@ -54,5 +64,19 @@ public class Calculator : MonoBehaviour
         firstNumber = 0;
         operation = "";
         display.text = "";
+    }
+
+    
+    public void OnShowMaxResultClick()
+    {
+        if (results.Count > 0)
+        {
+            float maxValue = Mathf.Max(results.ToArray());
+            display.text = "Max: " + maxValue;
+        }
+        else
+        {
+            display.text = "Brak wyników";
+        }
     }
 }
